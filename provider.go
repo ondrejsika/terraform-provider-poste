@@ -14,6 +14,7 @@ func Provider() *schema.Provider {
 	p := &schema.Provider{
 		ResourcesMap: map[string]*schema.Resource{
 			"poste_domain": resourceDoamin(),
+			"poste_box":    resourceBox(),
 		},
 		Schema: map[string]*schema.Schema{
 			"origin": {
