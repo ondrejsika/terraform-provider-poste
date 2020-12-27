@@ -7,3 +7,4 @@ terraform.tf*
 *.log
 
 terraform-provider-poste
+dist/**
