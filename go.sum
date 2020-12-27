@@ -149,8 +149,8 @@ github.com/mitchellh/reflectwalk v1.0.1 h1:FVzMWA5RllMAKIdUSC8mdWo3XtwoecrH79BY7
 github.com/mitchellh/reflectwalk v1.0.1/go.mod h1:mSTlrgnPZtwu0c4WaC2kGObEpuNDbx0jmZXqmk4esnw=
 github.com/oklog/run v1.0.0 h1:Ru7dDtJNOyC66gQ5dQmaCa0qIsAUFY3sFpK1Xk8igrw=
 github.com/oklog/run v1.0.0/go.mod h1:dlhp/R75TPv97u0XWUtDeV/lRKWPKSdTuV0TZvrmrQA=
-github.com/ondrejsika/poste-go v0.0.0-20200519190334-5da6b50c895b h1:pskDmdYzmogaK4NpO+PYNaJ9PUcJKZtMrbbHj+wqgFA=
-github.com/ondrejsika/poste-go v0.0.0-20200519190334-5da6b50c895b/go.mod h1:Ev1LPlWh4KQmftEjHlzKSgGgeMSod5wkVVgTtJqc+TA=
+github.com/ondrejsika/poste-go v0.0.0-20201227171923-0613459b99cd h1:Sx7PYw77UeZ2WSkcvkt2AAhoTVafml3+GVwBwrQMhVo=
+github.com/ondrejsika/poste-go v0.0.0-20201227171923-0613459b99cd/go.mod h1:Ev1LPlWh4KQmftEjHlzKSgGgeMSod5wkVVgTtJqc+TA=
 github.com/pierrec/lz4 v2.0.5+incompatible/go.mod h1:pdkljMzZIN41W+lC3N2tnIh5sFi+IEE17M5jbnwPHcY=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=

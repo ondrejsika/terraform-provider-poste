@@ -29,6 +29,14 @@ func resourceBoxRead(d *schema.ResourceData, m interface{}) error {
 }
 
 func resourceBoxUpdate(d *schema.ResourceData, m interface{}) error {
+	email := d.Get("email").(string)
+	password := d.Get("password").(string)
+	api := PosteApi(m)
+	err := api.UpdateBoxPassword(email, password)
+	if err != nil {
+		return fmt.Errorf("%s", err)
+	}
+	d.Set("password", password)
 	return nil
 }
 
