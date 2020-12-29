@@ -32,14 +32,23 @@ resource "poste_box" "noreply_foo_com" {
   password = "asdfasdf1"
 }
 
+resource "poste_sieve_copy" "bar_foobar_com" {
+  emails = [
+    "foo@foo.com",
+    "bar@bar.com",
+  ]
+}
+
 resource "poste_box" "bar_foobar_com" {
   email = "bar@${poste_domain.foobar_com.name}"
   password = "asdfasdf1"
+  sieve = poste_sieve_copy.bar_foobar_com.sieve
 }
 ```
 
 ## Change Log
 
+- v0.6.0 - Add `poste_sieve_copy` resource, which generate copy & forward sieve script
 - v0.5.0 - Add custom `sieve` (param) support for `poste_box`
 - v0.4.0 - Add password update support to `poste_box`
 - v0.3.0 - Add import support for `poste_domain` & `poste_box`

@@ -13,8 +13,9 @@ type Config struct {
 func Provider() *schema.Provider {
 	p := &schema.Provider{
 		ResourcesMap: map[string]*schema.Resource{
-			"poste_domain": resourceDoamin(),
-			"poste_box":    resourceBox(),
+			"poste_domain":     resourceDoamin(),
+			"poste_box":        resourceBox(),
+			"poste_sieve_copy": resourceSieveCopy(),
 		},
 		Schema: map[string]*schema.Schema{
 			"origin": {
