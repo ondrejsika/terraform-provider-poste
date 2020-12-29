@@ -8,3 +8,5 @@ terraform.tf*
 
 terraform-provider-poste
 dist/**
+
+private-example/**
