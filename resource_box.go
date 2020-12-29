@@ -102,16 +102,16 @@ func resourceBox() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
-			"email": &schema.Schema{
+			"email": {
 				Type:     schema.TypeString,
 				Required: true,
 				ForceNew: true,
 			},
-			"password": &schema.Schema{
+			"password": {
 				Type:     schema.TypeString,
 				Required: true,
 			},
-			"sieve": &schema.Schema{
+			"sieve": {
 				Type:     schema.TypeString,
 				Optional: true,
 			},
