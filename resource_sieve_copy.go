@@ -30,12 +30,20 @@ func resourceSieveCopyDelete(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
 
+func resourceSieveCopyDiff(d *schema.ResourceDiff, m interface{}) error {
+	if d.HasChange("emails") {
+		d.SetNewComputed("sieve")
+	}
+	return nil
+}
+
 func resourceSieveCopy() *schema.Resource {
 	return &schema.Resource{
-		Create: resourceSieveCopyCreateReadUpdate,
-		Read:   resourceSieveCopyCreateReadUpdate,
-		Update: resourceSieveCopyCreateReadUpdate,
-		Delete: resourceSieveCopyDelete,
+		Create:        resourceSieveCopyCreateReadUpdate,
+		Read:          resourceSieveCopyCreateReadUpdate,
+		Update:        resourceSieveCopyCreateReadUpdate,
+		Delete:        resourceSieveCopyDelete,
+		CustomizeDiff: resourceSieveCopyDiff,
 
 		Schema: map[string]*schema.Schema{
 			"emails": {
