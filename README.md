@@ -40,6 +40,7 @@ resource "poste_box" "bar_foobar_com" {
 
 ## Change Log
 
+- v0.5.0 - Add custom `sieve` (param) support for `poste_box`
 - v0.4.0 - Add password update support to `poste_box`
 - v0.3.0 - Add import support for `poste_domain` & `poste_box`
 - v0.2.0 - Add `poste_box` resource (only add/remove box with plaintext password)
