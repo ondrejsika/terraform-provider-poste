@@ -48,6 +48,7 @@ resource "poste_box" "bar_foobar_com" {
 
 ## Change Log
 
+- v0.7.0 - Make box password sensitive (hidden)
 - v0.6.1 - Fix computed `sieve` value - recompute on `emails` change
 - v0.6.0 - Add `poste_sieve_copy` resource, which generate copy & forward sieve script
 - v0.5.0 - Add custom `sieve` (param) support for `poste_box`

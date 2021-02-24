@@ -108,8 +108,9 @@ func resourceBox() *schema.Resource {
 				ForceNew: true,
 			},
 			"password": {
-				Type:     schema.TypeString,
-				Required: true,
+				Type:      schema.TypeString,
+				Required:  true,
+				Sensitive: true,
 			},
 			"sieve": {
 				Type:     schema.TypeString,
