@@ -1,9 +1,10 @@
 package main
 
 import (
+	"context"
 	"fmt"
-
-	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/ondrejsika/poste-go"
 )
 
@@ -19,7 +20,9 @@ if header :contains "subject" "*****SPAM*****"
 	return api.UpdateBoxSieve(email, sieve)
 }
 
-func resourceBoxCreate(d *schema.ResourceData, m interface{}) error {
+func resourceBoxCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	var diags diag.Diagnostics
+
 	email := d.Get("email").(string)
 	password := d.Get("password").(string)
 	sieve := d.Get("sieve").(string)
@@ -30,23 +33,25 @@ func resourceBoxCreate(d *schema.ResourceData, m interface{}) error {
 	var err error
 	err = api.CreateBox(email, password)
 	if err != nil {
-		return fmt.Errorf("%s", err)
+		return diag.FromErr(err)
 	}
 	err = updateBoxSieve(api, email, sieve)
 	if err != nil {
-		return fmt.Errorf("%s", err)
+		return diag.FromErr(err)
 	}
 
-	return nil
+	return diags
 }
 
-func resourceBoxRead(d *schema.ResourceData, m interface{}) error {
+func resourceBoxRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	var diags diag.Diagnostics
 	email := d.Get("email").(string)
 	d.Set("email", email)
-	return nil
+	return diags
 }
 
-func resourceBoxUpdate(d *schema.ResourceData, m interface{}) error {
+func resourceBoxUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	var diags diag.Diagnostics
 	email := d.Get("email").(string)
 	password := d.Get("password").(string)
 	sieve := d.Get("sieve").(string)
@@ -54,28 +59,29 @@ func resourceBoxUpdate(d *schema.ResourceData, m interface{}) error {
 	var err error
 	err = api.UpdateBoxPassword(email, password)
 	if err != nil {
-		return fmt.Errorf("%s", err)
+		return diag.FromErr(err)
 	}
 	d.Set("password", password)
 	err = updateBoxSieve(api, email, sieve)
 	if err != nil {
-		return fmt.Errorf("%s", err)
+		return diag.FromErr(err)
 	}
 	d.Set("sieve", sieve)
-	return nil
+	return diags
 }
 
-func resourceBoxDelete(d *schema.ResourceData, m interface{}) error {
+func resourceBoxDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	email := d.Get("email").(string)
 
 	api := PosteApi(m)
 	err := api.DeleteBox(email)
 
 	if err != nil {
-		return fmt.Errorf("%s", err)
+		return diag.FromErr(err)
 	}
 
-	return nil
+	var diags diag.Diagnostics
+	return diags
 }
 
 func resourceBoxImport(d *schema.ResourceData, m interface{}) ([]*schema.ResourceData, error) {
@@ -93,10 +99,10 @@ func resourceBoxImport(d *schema.ResourceData, m interface{}) ([]*schema.Resourc
 
 func resourceBox() *schema.Resource {
 	return &schema.Resource{
-		Create: resourceBoxCreate,
-		Read:   resourceBoxRead,
-		Update: resourceBoxUpdate,
-		Delete: resourceBoxDelete,
+		CreateContext: resourceBoxCreate,
+		ReadContext:   resourceBoxRead,
+		UpdateContext: resourceBoxUpdate,
+		DeleteContext: resourceBoxDelete,
 		Importer: &schema.ResourceImporter{
 			State: resourceBoxImport,
 		},

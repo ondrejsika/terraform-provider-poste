@@ -48,6 +48,7 @@ resource "poste_box" "bar_foobar_com" {
 
 ## Change Log
 
+- v0.8.0 - Migrate to provider SDK v2
 - v0.7.0 - Make box password sensitive (hidden)
 - v0.6.1 - Fix computed `sieve` value - recompute on `emails` change
 - v0.6.0 - Add `poste_sieve_copy` resource, which generate copy & forward sieve script

@@ -1,12 +1,14 @@
 package main
 
 import (
-	"fmt"
+	"context"
 
-	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
-func resourceDomainCreate(d *schema.ResourceData, m interface{}) error {
+func resourceDomainCreate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	var diags diag.Diagnostics
 	domain := d.Get("name").(string)
 
 	d.SetId(domain)
@@ -15,33 +17,36 @@ func resourceDomainCreate(d *schema.ResourceData, m interface{}) error {
 	err := api.CreateDomain(domain)
 
 	if err != nil {
-		return fmt.Errorf("%s", err)
+		return diag.FromErr(err)
 	}
 
-	return nil
+	return diags
 }
 
-func resourceDomainRead(d *schema.ResourceData, m interface{}) error {
+func resourceDomainRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	var diags diag.Diagnostics
 	domain := d.Id()
 	d.Set("name", domain)
-	return nil
+	return diags
 }
 
-func resourceDomainUpdate(d *schema.ResourceData, m interface{}) error {
-	return nil
+func resourceDomainUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	var diags diag.Diagnostics
+	return diags
 }
 
-func resourceDomainDelete(d *schema.ResourceData, m interface{}) error {
+func resourceDomainDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	var diags diag.Diagnostics
 	domain := d.Get("name").(string)
 
 	api := PosteApi(m)
 	err := api.DeleteDomain(domain)
 
 	if err != nil {
-		return fmt.Errorf("%s", err)
+		return diag.FromErr(err)
 	}
 
-	return nil
+	return diags
 }
 
 func resourceDomainImport(d *schema.ResourceData, m interface{}) ([]*schema.ResourceData, error) {
@@ -52,10 +57,10 @@ func resourceDomainImport(d *schema.ResourceData, m interface{}) ([]*schema.Reso
 
 func resourceDoamin() *schema.Resource {
 	return &schema.Resource{
-		Create: resourceDomainCreate,
-		Read:   resourceDomainRead,
-		Update: resourceDomainUpdate,
-		Delete: resourceDomainDelete,
+		CreateContext: resourceDomainCreate,
+		ReadContext:   resourceDomainRead,
+		UpdateContext: resourceDomainUpdate,
+		DeleteContext: resourceDomainDelete,
 		Importer: &schema.ResourceImporter{
 			State: resourceDomainImport,
 		},

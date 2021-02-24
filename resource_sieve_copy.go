@@ -1,10 +1,14 @@
 package main
 
 import (
-	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
+	"context"
+
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
-func resourceSieveCopyCreateReadUpdate(d *schema.ResourceData, m interface{}) error {
+func resourceSieveCopyCreateReadUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	var diags diag.Diagnostics
 	id := ""
 	sieve := `# poste.io copy filter
 require ["copy"];
@@ -23,26 +27,35 @@ if true
 	sieve = sieve + "}"
 	d.SetId(id)
 	d.Set("sieve", sieve)
-	return nil
+	return diags
 }
 
-func resourceSieveCopyDelete(d *schema.ResourceData, m interface{}) error {
-	return nil
+func resourceSieveCopyDelete(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	var diags diag.Diagnostics
+	return diags
 }
 
-func resourceSieveCopyDiff(d *schema.ResourceDiff, m interface{}) error {
+func resourceSieveCopyDiff(ctx context.Context, d *schema.ResourceDiff, m interface{}) error {
 	if d.HasChange("emails") {
 		d.SetNewComputed("sieve")
 	}
 	return nil
 }
 
+// func resourceSieveCopyDiff(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+// 	var diags diag.Diagnostics
+// 	if d.HasChange("emails") {
+// 		d.SetNewComputed("sieve")
+// 	}
+// 	return diags
+// }
+
 func resourceSieveCopy() *schema.Resource {
 	return &schema.Resource{
-		Create:        resourceSieveCopyCreateReadUpdate,
-		Read:          resourceSieveCopyCreateReadUpdate,
-		Update:        resourceSieveCopyCreateReadUpdate,
-		Delete:        resourceSieveCopyDelete,
+		CreateContext: resourceSieveCopyCreateReadUpdate,
+		ReadContext:   resourceSieveCopyCreateReadUpdate,
+		UpdateContext: resourceSieveCopyCreateReadUpdate,
+		DeleteContext: resourceSieveCopyDelete,
 		CustomizeDiff: resourceSieveCopyDiff,
 
 		Schema: map[string]*schema.Schema{
